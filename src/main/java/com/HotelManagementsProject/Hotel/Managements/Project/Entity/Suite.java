@@ -7,7 +7,7 @@ public class Suite extends Room {
     public Suite() {
     }
 
-    public Suite(String roomNumber, double rate) {
-        super(roomNumber, rate, "Suite");
+    public Suite(String roomNumber, double rate,boolean available) {
+        super(roomNumber, rate, "Suite",available);
     }
 }

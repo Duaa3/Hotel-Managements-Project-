@@ -1,9 +1,6 @@
 package com.HotelManagementsProject.Hotel.Managements.Project.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -14,11 +11,18 @@ public class Room {
     private String roomNumber;
     private double rate;
     private String roomType;
+    @Column(name = "is_available")
+    private boolean available;
 
-    public Room(String roomNumber, double rate, String standard) {
-    }
 
     public Room() {
+    }
+
+    public Room(String roomNumber, double rate, String roomType, boolean available) {
+        this.roomNumber = roomNumber;
+        this.rate = rate;
+        this.roomType = roomType;
+        this.available = available;
     }
 
     public String getRoomNumber() {
@@ -45,17 +49,25 @@ public class Room {
         this.roomType = roomType;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Double.compare(rate, room.rate) == 0 && Objects.equals(roomNumber, room.roomNumber) && Objects.equals(roomType, room.roomType);
+        return Double.compare(rate, room.rate) == 0 && available == room.available && Objects.equals(roomNumber, room.roomNumber) && Objects.equals(roomType, room.roomType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roomNumber, rate, roomType);
+        return Objects.hash(roomNumber, rate, roomType, available);
     }
 
     @Override
@@ -64,6 +76,7 @@ public class Room {
                 "roomNumber='" + roomNumber + '\'' +
                 ", rate=" + rate +
                 ", roomType='" + roomType + '\'' +
+                ", available=" + available +
                 '}';
     }
 }
