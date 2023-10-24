@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/hotels")
@@ -16,40 +17,59 @@ public class HotelController {
     private HotelService hotelService;
 
     @PostMapping("/create")
-    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel) {
-        Hotel createdHotel = hotelService.createHotel(hotel);
-        return new ResponseEntity<>(createdHotel, HttpStatus.CREATED);
+    public ResponseEntity<String> createHotel(@RequestBody @Valid Hotel hotel) {
+        try {
+            Hotel createdHotel = hotelService.createHotel(hotel);
+            String message = "Hotel added successfully";
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } catch (Exception e) {
+            String errorMessage = "Hotel not created: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 
     @PutMapping("/update/{hotelId}")
-    public ResponseEntity<Hotel> updateHotel(@PathVariable Long hotelId, @RequestBody Hotel updatedHotel) {
-        Hotel hotel = hotelService.updateHotel(hotelId, updatedHotel);
-        if (hotel != null) {
-            return new ResponseEntity<>(hotel, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> updateHotel(@PathVariable Long hotelId, @RequestBody Hotel updatedHotel) {
+        try {
+            Hotel hotel = hotelService.updateHotel(hotelId, updatedHotel);
+            if (hotel != null) {
+                String message = "Hotel updated successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } else {
+                String errorMessage = "Hotel not found with ID: " + hotelId;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            }
+        } catch (Exception e) {
+            String errorMessage = "Hotel update failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
     @GetMapping("/{hotelId}")
-    public ResponseEntity<Hotel> getHotelById(@PathVariable Long hotelId) {
+    public ResponseEntity<String> getHotelById(@PathVariable Long hotelId) {
         Hotel hotel = hotelService.getHotelById(hotelId);
         if (hotel != null) {
-            return new ResponseEntity<>(hotel, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(hotel.toString());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String errorMessage = "Hotel not found with ID: " + hotelId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Hotel>> getAllHotels() {
+    public ResponseEntity<String> getAllHotels() {
         List<Hotel> hotels = hotelService.getAllHotels();
-        return new ResponseEntity<>(hotels, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(hotels.toString());
     }
 
     @DeleteMapping("/delete/{hotelId}")
-    public ResponseEntity<Void> deleteHotel(@PathVariable Long hotelId) {
-        hotelService.deleteHotel(hotelId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteHotel(@PathVariable Long hotelId) {
+        try {
+            hotelService.deleteHotel(hotelId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Hotel deleted successfully");
+        } catch (Exception e) {
+            String errorMessage = "Hotel delete failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 }

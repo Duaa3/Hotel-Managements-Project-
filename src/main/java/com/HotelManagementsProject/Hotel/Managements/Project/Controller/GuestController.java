@@ -16,41 +16,58 @@ public class GuestController {
     private GuestService guestService;
 
     @PostMapping("/register")
-    public ResponseEntity<Guest> registerGuest(@RequestBody Guest guest) {
-        Guest registeredGuest = guestService.registerGuest(guest);
-        return new ResponseEntity<>(registeredGuest, HttpStatus.CREATED);
+    public ResponseEntity<String> registerGuest(@RequestBody Guest guest) {
+        try {
+            Guest registeredGuest = guestService.registerGuest(guest);
+            String message = "Guest registered successfully";
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } catch (Exception e) {
+            String errorMessage = "Guest not registered: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 
     @GetMapping("/{guestId}")
-    public ResponseEntity<Guest> getGuestById(@PathVariable Long guestId) {
+    public ResponseEntity<Object> getGuestById(@PathVariable Long guestId) {
         Guest guest = guestService.getGuestById(guestId);
         if (guest != null) {
-            return new ResponseEntity<>(guest, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(guest.toString());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String errorMessage = "Guest not found with ID: " + guestId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Guest>> getAllGuests() {
+    public ResponseEntity<Object> getAllGuests() {
         List<Guest> guests = guestService.getAllGuests();
-        return new ResponseEntity<>(guests, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(guests.toString());
     }
 
     @PutMapping("/update/{guestId}")
-    public ResponseEntity<Guest> updateGuest(@PathVariable Long guestId, @RequestBody Guest updatedGuest) {
-        Guest guest = guestService.updateGuest(guestId, updatedGuest);
-        if (guest != null) {
-            return new ResponseEntity<>(guest, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> updateGuest(@PathVariable Long guestId, @RequestBody Guest updatedGuest) {
+        try {
+            Guest guest = guestService.updateGuest(guestId, updatedGuest);
+            if (guest != null) {
+                String message = "Guest updated successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } else {
+                String errorMessage = "Guest not found with ID: " + guestId;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            }
+        } catch (Exception e) {
+            String errorMessage = "Guest update failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
     @DeleteMapping("/delete/{guestId}")
-    public ResponseEntity<Void> deleteGuest(@PathVariable Long guestId) {
-        guestService.deleteGuest(guestId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteGuest(@PathVariable Long guestId) {
+        if (guestService.deleteGuest(guestId)) {
+            return ResponseEntity.status(HttpStatus.OK).body("Guest deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Guest not found with ID: " + guestId);
+        }
     }
-}
 
+}

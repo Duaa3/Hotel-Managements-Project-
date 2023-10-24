@@ -26,7 +26,15 @@ public class BillingService {
     }
 
     public Billing updateBilling(Long id, Billing updatedBilling) {
-        return billingRepository.save(updatedBilling);
+        Billing existingBilling = billingRepository.findById(id).orElse(null);
+        if (existingBilling != null) {
+            existingBilling.setPaymentStatus(updatedBilling.getPaymentStatus());
+            existingBilling.setPaymentMethod(updatedBilling.getPaymentMethod());
+
+
+            return billingRepository.save(existingBilling);
+        }
+        return null;
     }
 
     public void deleteBilling(Long id) {

@@ -2,6 +2,7 @@ package com.HotelManagementsProject.Hotel.Managements.Project.Controller;
 
 import com.HotelManagementsProject.Hotel.Managements.Project.Entity.Billing;
 import com.HotelManagementsProject.Hotel.Managements.Project.Service.BillingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,41 +17,63 @@ public class BillingController {
     private BillingService billingService;
 
     @PostMapping("/create")
-    public ResponseEntity<Billing> createBilling(@RequestBody Billing billing) {
-        Billing createdBilling = billingService.createBilling(billing);
-        return new ResponseEntity<>(createdBilling, HttpStatus.CREATED);
+    public ResponseEntity<String> createBilling(@RequestBody @Valid Billing billing) {
+        try {
+            Billing createdBilling = billingService.createBilling(billing);
+            String message = "Added Successfully";
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        } catch (Exception e) {
+            String errorMessage = "Billing not created: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 
     @GetMapping("/{billingId}")
-    public ResponseEntity<Billing> getBillingById(@PathVariable Long billingId) {
+    public ResponseEntity<Object> getBillingById(@PathVariable Long billingId) {
         Billing billing = billingService.getBillingById(billingId);
         if (billing != null) {
-            return new ResponseEntity<>(billing, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(billing.toString());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String errorMessage = "Billing not found with ID: " + billingId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
+
     @GetMapping("/all")
-    public ResponseEntity<List<Billing>> getAllBillings() {
+    public ResponseEntity<Object> getAllBillings() {
         List<Billing> billings = billingService.getAllBillings();
-        return new ResponseEntity<>(billings, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(billings.toString());
     }
 
     @PutMapping("/update/{billingId}")
-    public ResponseEntity<Billing> updateBilling(@PathVariable Long billingId, @RequestBody Billing updatedBilling) {
-        Billing billing = billingService.updateBilling(billingId, updatedBilling);
-        if (billing != null) {
-            return new ResponseEntity<>(billing, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> updateBilling(@PathVariable Long billingId, @RequestBody Billing updatedBilling) {
+
+            try{
+                billingService.updateBilling(billingId, updatedBilling);
+                String message = "Updated Successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+
+        } catch (Exception e) {
+            String errorMessage = "Billing update failed"+e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
-    @DeleteMapping("/delete/{billingId}")
-    public ResponseEntity<Void> deleteBilling(@PathVariable Long billingId) {
-        billingService.deleteBilling(billingId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-}
 
+    @DeleteMapping("/delete/{billingId}")
+    public ResponseEntity<String> deleteBilling(@PathVariable String billingId) {
+        try {
+            Long id = Long.parseLong(billingId);
+            billingService.deleteBilling(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Billing deleted successfully");
+        } catch (NumberFormatException e) {
+            String errorMessage = "Invalid billing ID format: " + billingId;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        } catch (Exception e) {
+            String errorMessage = "Billing delete failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
+    }
+
+}

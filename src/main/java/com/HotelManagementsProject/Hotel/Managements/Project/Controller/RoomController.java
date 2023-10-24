@@ -16,46 +16,66 @@ public class RoomController {
     private RoomService roomService;
 
     @PostMapping("/create")
-    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
-        Room createdRoom = roomService.createRoom(room);
-        return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
+    public ResponseEntity<String> createRoom(@RequestBody Room room) {
+        try {
+            Room createdRoom = roomService.createRoom(room);
+            String message = "Room created successfully";
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } catch (Exception e) {
+            String errorMessage = "Room not created: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 
     @PutMapping("/update/{roomId}")
-    public ResponseEntity<Room> updateRoom(@PathVariable Long roomId, @RequestBody Room updatedRoom) {
-        Room room = roomService.updateRoom(roomId, updatedRoom);
-        if (room != null) {
-            return new ResponseEntity<>(room, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> updateRoom(@PathVariable Long roomId, @RequestBody Room updatedRoom) {
+        try {
+            Room room = roomService.updateRoom(roomId, updatedRoom);
+            if (room != null) {
+                String message = "Room updated successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } else {
+                String errorMessage = "Room not found with ID: " + roomId;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            }
+        } catch (Exception e) {
+            String errorMessage = "Room update failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
     @GetMapping("/{roomId}")
-    public ResponseEntity<Room> getRoomById(@PathVariable Long roomId) {
+    public ResponseEntity<String> getRoomById(@PathVariable Long roomId) {
         Room room = roomService.getRoomById(roomId);
         if (room != null) {
-            return new ResponseEntity<>(room, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(room.toString());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String errorMessage = "Room not found with ID: " + roomId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Room>> getAllRooms() {
+    public ResponseEntity<String> getAllRooms() {
         List<Room> rooms = roomService.getAllRooms();
-        return new ResponseEntity<>(rooms, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(rooms.toString());
     }
 
     @GetMapping("/available")
-    public ResponseEntity<List<Room>> getAvailableRooms() {
+    public ResponseEntity<String> getAvailableRooms() {
         List<Room> availableRooms = roomService.getAvailableRooms();
-        return new ResponseEntity<>(availableRooms, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(availableRooms.toString());
     }
 
     @DeleteMapping("/delete/{roomId}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
-        roomService.deleteRoom(roomId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
+        try {
+            roomService.deleteRoom(roomId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Room deleted successfully");
+        } catch (Exception e) {
+            String errorMessage = "Room delete failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 }
+

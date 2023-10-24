@@ -16,40 +16,59 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping("/create")
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation createdReservation = reservationService.createReservation(reservation);
-        return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
+    public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
+        try {
+            Reservation createdReservation = reservationService.createReservation(reservation);
+            String message = "Reservation created successfully";
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } catch (Exception e) {
+            String errorMessage = "Reservation not created: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 
     @PutMapping("/update/{reservationId}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
-        Reservation reservation = reservationService.updateReservation(reservationId, updatedReservation);
-        if (reservation != null) {
-            return new ResponseEntity<>(reservation, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
+        try {
+            Reservation reservation = reservationService.updateReservation(reservationId, updatedReservation);
+            if (reservation != null) {
+                String message = "Reservation updated successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } else {
+                String errorMessage = "Reservation not found with ID: " + reservationId;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            }
+        } catch (Exception e) {
+            String errorMessage = "Reservation update failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
     @GetMapping("/{reservationId}")
-    public ResponseEntity<Reservation> getReservationById(@PathVariable Long reservationId) {
+    public ResponseEntity<String> getReservationById(@PathVariable Long reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
         if (reservation != null) {
-            return new ResponseEntity<>(reservation, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(reservation.toString());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String errorMessage = "Reservation not found with ID: " + reservationId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Reservation>> getAllReservations() {
+    public ResponseEntity<String> getAllReservations() {
         List<Reservation> reservations = reservationService.getAllReservations();
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(reservations.toString());
     }
 
     @DeleteMapping("/delete/{reservationId}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
-        reservationService.deleteReservation(reservationId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId) {
+        try {
+            reservationService.deleteReservation(reservationId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Reservation deleted successfully");
+        } catch (Exception e) {
+            String errorMessage = "Reservation delete failed: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
     }
 }
