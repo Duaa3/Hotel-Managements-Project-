@@ -8,6 +8,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Room {
 @Id
+@GeneratedValue(strategy = GenerationType.TABLE)
     private String roomNumber;
     private double rate;
     private String roomType;

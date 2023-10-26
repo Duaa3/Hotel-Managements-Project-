@@ -25,6 +25,8 @@ public class Billing {
         this.paymentMethod = paymentMethod;
     }
 
+
+
     public Long getId() {
         return id;
     }

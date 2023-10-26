@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class FrontDeskStaff extends Staff {
     public FrontDeskStaff() {
-        // Default constructor
+
     }
 
     public FrontDeskStaff(Long staffID, String firstName, String lastName, String email) {

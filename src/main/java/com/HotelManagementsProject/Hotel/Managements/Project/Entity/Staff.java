@@ -1,9 +1,6 @@
 package com.HotelManagementsProject.Hotel.Managements.Project.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -12,6 +9,7 @@ import java.util.Objects;
 public class Staff {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long staffID;
 
     private String firstName;
