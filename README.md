@@ -8,12 +8,12 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Authentication](#authentication)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [Trello Board](#trello-board)
 - [Google Slides Presentation](#google-slides-presentation)
 - [Class Diagram](#class-diagram)
+-  [Future Work](#future-work) 
 
 ## Project Overview
 The Hotel Management System is a web application for managing hotel-related operations. It includes functionality for creating and managing hotels, rooms, guests, reservations, and staff. This system is designed to simplify hotel management tasks, such as booking rooms, managing guest information, and handling reservations.
@@ -34,7 +34,7 @@ The Hotel Management System is a web application for managing hotel-related oper
 - Spring Security
 - Spring Data JPA
 - MySQL
-- JSON Web Tokens (JWT)
+- Bearer Authentication
 - Hibernate
 - RESTful API
 - Maven
@@ -54,9 +54,6 @@ The Hotel Management System is a web application for managing hotel-related oper
 - Access the web application through a web browser at http://localhost:8080.
 - Use the provided API endpoints for integration with other systems or applications.
 
-## Authentication
-- The system uses JSON Web Tokens (JWT) for authentication.
-- To obtain a JWT token, you need to authenticate using your username and password.
 
 ## API Endpoints
 | Controller Name      | Base Route         | Endpoint                    | Route                     | HTTP Method | Description                                         |
@@ -115,6 +112,27 @@ https://docs.google.com/presentation/d/your-presentation-id/edit](https://docs.g
 
 
 ## Class Diagram
+![image](https://github.com/Duaa3/Hotel-Managements-Project-/assets/124520079/b310b968-5e0b-4333-974a-bd7a3b5e8a6c)
+
+
+## Future Work
+
+While the current version of the project provides essential features, there are several areas where future work could enhance its functionality and usability. Some potential improvements include:
+
+1. **Reviews and Ratings:** Add a feature for guests to leave reviews and ratings for hotels, rooms, and their overall experience.
+
+2. **Advanced Search:** Enhance the search functionality with advanced filters, sorting options, and location-based search.
+
+3. **Mobile Application:** Develop a mobile app version to reach a wider audience and provide a seamless booking experience on smartphones.
+
+4. **Internationalization:** Support multiple languages and currencies to cater to a global audience.
+
+5. **Automated Notifications:** Implement email or SMS notifications for booking confirmations, check-in/check-out reminders, and special offers.
+
+10. **Performance Optimization:** Continuously improve the system's performance and scalability as the user base grows.
+
+Feel free to contribute or suggest additional features and improvements to make this project even better. I welcome collaboration and ideas to enhance the functionality and user experience.
+
 
 
    
