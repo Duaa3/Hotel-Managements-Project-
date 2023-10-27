@@ -11,7 +11,9 @@
 - [Authentication](#authentication)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [License](#license)
+- [Trello Board](#trello-board)
+- [Google Slides Presentation](#google-slides-presentation)
+- [Class Diagram](#class-diagram)
 
 ## Project Overview
 The Hotel Management System is a web application for managing hotel-related operations. It includes functionality for creating and managing hotels, rooms, guests, reservations, and staff. This system is designed to simplify hotel management tasks, such as booking rooms, managing guest information, and handling reservations.
@@ -102,5 +104,16 @@ The Hotel Management System is a web application for managing hotel-related oper
 3. Create a new branch to work on a feature or bug fix.
 4. Make your changes, commit them, and push to your fork on GitHub.
 5. Create a pull request to the original repository.
+
+## Trello Board
+Check the project progress on [Trello]([https://trello.com/your-trello-board-link](https://trello.com/b/GuAK5Abt/duaaprojectironhack)).
+
+## Google Slides Presentation
+Explore the project presentation on [Google Slides]([https://docs.google.com/presentation/d/your-presentation-id/edit](https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0)https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0).
+
+## Class Diagram
+
+
+   
    
    
