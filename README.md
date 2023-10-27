@@ -106,10 +106,13 @@ The Hotel Management System is a web application for managing hotel-related oper
 5. Create a pull request to the original repository.
 
 ## Trello Board
-Check the project progress on [Trello]([https://trello.com/your-trello-board-link](https://trello.com/b/GuAK5Abt/duaaprojectironhack)).
+Check the project progress on [Trello]
+https://trello.com/your-trello-board-link](https://trello.com/b/GuAK5Abt/duaaprojectironhack
 
 ## Google Slides Presentation
-Explore the project presentation on [Google Slides]([https://docs.google.com/presentation/d/your-presentation-id/edit](https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0)https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0).
+Explore the project presentation on [Google Slides]
+https://docs.google.com/presentation/d/your-presentation-id/edit](https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0)https://docs.google.com/presentation/d/1enl90goy0Gw9fIZnXQA7f80QahZHEte-7jiyDRV7iFw/edit#slide=id.gae08f917ff_0_0
+
 
 ## Class Diagram
 
