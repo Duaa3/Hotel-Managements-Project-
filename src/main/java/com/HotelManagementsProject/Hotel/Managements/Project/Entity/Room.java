@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Room {
+public class  Room {
 @Id
 @GeneratedValue(strategy = GenerationType.TABLE)
     private String roomNumber;

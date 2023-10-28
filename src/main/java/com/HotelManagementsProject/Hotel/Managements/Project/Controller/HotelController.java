@@ -16,6 +16,12 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
+    /**
+     * Create a new hotel entry.
+     *
+     * @param hotel The hotel object to be created.
+     * @return A response indicating the success or failure of the creation.
+     */
     @PostMapping("/create")
     public ResponseEntity<String> createHotel(@RequestBody @Valid Hotel hotel) {
         try {
@@ -28,6 +34,13 @@ public class HotelController {
         }
     }
 
+    /**
+     * Update a hotel by its ID.
+     *
+     * @param hotelId     The ID of the hotel to update.
+     * @param updatedHotel The updated hotel object.
+     * @return A response indicating the success or failure of the update.
+     */
     @PutMapping("/update/{hotelId}")
     public ResponseEntity<String> updateHotel(@PathVariable Long hotelId, @RequestBody Hotel updatedHotel) {
         try {
@@ -45,6 +58,12 @@ public class HotelController {
         }
     }
 
+    /**
+     * Retrieve a hotel by its ID.
+     *
+     * @param hotelId The ID of the hotel to retrieve.
+     * @return A response containing the hotel information or an error message.
+     */
     @GetMapping("/{hotelId}")
     public ResponseEntity<String> getHotelById(@PathVariable Long hotelId) {
         Hotel hotel = hotelService.getHotelById(hotelId);
@@ -56,12 +75,23 @@ public class HotelController {
         }
     }
 
+    /**
+     * Retrieve a list of all hotels.
+     *
+     * @return A response containing a list of hotel entries or an error message.
+     */
     @GetMapping("/all")
     public ResponseEntity<String> getAllHotels() {
         List<Hotel> hotels = hotelService.getAllHotels();
         return ResponseEntity.status(HttpStatus.OK).body(hotels.toString());
     }
 
+    /**
+     * Delete a hotel by its ID.
+     *
+     * @param hotelId The ID of the hotel to delete.
+     * @return A response indicating the success or failure of the deletion.
+     */
     @DeleteMapping("/delete/{hotelId}")
     public ResponseEntity<String> deleteHotel(@PathVariable Long hotelId) {
         try {

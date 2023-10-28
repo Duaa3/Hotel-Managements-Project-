@@ -15,6 +15,12 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    /**
+     * Create a new reservation.
+     *
+     * @param reservation The reservation object to be created.
+     * @return A response indicating the success or failure of the creation.
+     */
     @PostMapping("/create")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
         try {
@@ -27,6 +33,13 @@ public class ReservationController {
         }
     }
 
+    /**
+     * Update a reservation by its ID.
+     *
+     * @param reservationId      The ID of the reservation to update.
+     * @param updatedReservation The updated reservation object.
+     * @return A response indicating the success or failure of the update.
+     */
     @PutMapping("/update/{reservationId}")
     public ResponseEntity<String> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
         try {
@@ -44,6 +57,12 @@ public class ReservationController {
         }
     }
 
+    /**
+     * Retrieve a reservation by its ID.
+     *
+     * @param reservationId The ID of the reservation to retrieve.
+     * @return A response containing the reservation information or an error message.
+     */
     @GetMapping("/{reservationId}")
     public ResponseEntity<String> getReservationById(@PathVariable Long reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
@@ -55,12 +74,23 @@ public class ReservationController {
         }
     }
 
+    /**
+     * Retrieve a list of all reservations.
+     *
+     * @return A response containing a list of reservation entries or an error message.
+     */
     @GetMapping("/all")
     public ResponseEntity<String> getAllReservations() {
         List<Reservation> reservations = reservationService.getAllReservations();
         return ResponseEntity.status(HttpStatus.OK).body(reservations.toString());
     }
 
+    /**
+     * Delete a reservation by its ID.
+     *
+     * @param reservationId The ID of the reservation to delete.
+     * @return A response indicating the success or failure of the deletion.
+     */
     @DeleteMapping("/delete/{reservationId}")
     public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId) {
         try {

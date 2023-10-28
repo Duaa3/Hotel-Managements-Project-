@@ -16,6 +16,12 @@ public class BillingController {
     @Autowired
     private BillingService billingService;
 
+    /**
+     * Create a new billing entry.
+     *
+     * @param billing The billing object to be created.
+     * @return A response indicating the success or failure of the creation.
+     */
     @PostMapping("/create")
     public ResponseEntity<String> createBilling(@RequestBody @Valid Billing billing) {
         try {
@@ -28,6 +34,12 @@ public class BillingController {
         }
     }
 
+    /**
+     * Retrieve a billing entry by its ID.
+     *
+     * @param billingId The ID of the billing entry to retrieve.
+     * @return A response containing the billing information or an error message.
+     */
     @GetMapping("/{billingId}")
     public ResponseEntity<Object> getBillingById(@PathVariable Long billingId) {
         Billing billing = billingService.getBillingById(billingId);
@@ -39,28 +51,43 @@ public class BillingController {
         }
     }
 
-
+    /**
+     * Retrieve a list of all billing entries.
+     *
+     * @return A response containing a list of billing entries or an error message.
+     */
     @GetMapping("/all")
     public ResponseEntity<Object> getAllBillings() {
         List<Billing> billings = billingService.getAllBillings();
         return ResponseEntity.status(HttpStatus.OK).body(billings.toString());
     }
 
+    /**
+     * Update a billing entry by its ID.
+     *
+     * @param billingId     The ID of the billing entry to update.
+     * @param updatedBilling The updated billing object.
+     * @return A response indicating the success or failure of the update.
+     */
     @PutMapping("/update/{billingId}")
     public ResponseEntity<String> updateBilling(@PathVariable Long billingId, @RequestBody Billing updatedBilling) {
 
-            try{
-                billingService.updateBilling(billingId, updatedBilling);
-                String message = "Updated Successfully";
-                return ResponseEntity.status(HttpStatus.OK).body(message);
-
+        try {
+            billingService.updateBilling(billingId, updatedBilling);
+            String message = "Updated Successfully";
+            return ResponseEntity.status(HttpStatus.OK).body(message);
         } catch (Exception e) {
-            String errorMessage = "Billing update failed"+e.getMessage();
+            String errorMessage = "Billing update failed" + e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
 
-
+    /**
+     * Delete a billing entry by its ID.
+     *
+     * @param billingId The ID of the billing entry to delete.
+     * @return A response indicating the success or failure of the deletion.
+     */
     @DeleteMapping("/delete/{billingId}")
     public ResponseEntity<String> deleteBilling(@PathVariable String billingId) {
         try {
@@ -75,5 +102,4 @@ public class BillingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
-
 }

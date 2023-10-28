@@ -15,6 +15,12 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
+    /**
+     * Create a new staff member.
+     *
+     * @param staff The staff object to be created.
+     * @return A response indicating the success or failure of the creation.
+     */
     @PostMapping("/create")
     public ResponseEntity<String> createStaff(@RequestBody Staff staff) {
         try {
@@ -27,6 +33,13 @@ public class StaffController {
         }
     }
 
+    /**
+     * Update a staff member by their ID.
+     *
+     * @param staffId       The ID of the staff member to update.
+     * @param updatedStaff  The updated staff member object.
+     * @return A response indicating the success or failure of the update.
+     */
     @PutMapping("/update/{staffId}")
     public ResponseEntity<String> updateStaff(@PathVariable Long staffId, @RequestBody Staff updatedStaff) {
         try {
@@ -44,6 +57,12 @@ public class StaffController {
         }
     }
 
+    /**
+     * Retrieve a staff member by their ID.
+     *
+     * @param staffId The ID of the staff member to retrieve.
+     * @return A response containing the staff member information or an error message.
+     */
     @GetMapping("/{staffId}")
     public ResponseEntity<String> getStaffById(@PathVariable Long staffId) {
         Staff staff = staffService.getStaffById(staffId);
@@ -55,12 +74,23 @@ public class StaffController {
         }
     }
 
+    /**
+     * Retrieve a list of all staff members.
+     *
+     * @return A response containing a list of staff member entries or an error message.
+     */
     @GetMapping("/all")
     public ResponseEntity<String> getAllStaff() {
         List<Staff> staffList = staffService.getAllStaff();
         return ResponseEntity.status(HttpStatus.OK).body(staffList.toString());
     }
 
+    /**
+     * Delete a staff member by their ID.
+     *
+     * @param staffId The ID of the staff member to delete.
+     * @return A response indicating the success or failure of the deletion.
+     */
     @DeleteMapping("/delete/{staffId}")
     public ResponseEntity<String> deleteStaff(@PathVariable Long staffId) {
         try {

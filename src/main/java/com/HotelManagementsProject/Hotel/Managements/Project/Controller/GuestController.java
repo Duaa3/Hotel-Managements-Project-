@@ -15,6 +15,12 @@ public class GuestController {
     @Autowired
     private GuestService guestService;
 
+    /**
+     * Register a new guest.
+     *
+     * @param guest The guest object to be registered.
+     * @return A response indicating the success or failure of the registration.
+     */
     @PostMapping("/register")
     public ResponseEntity<String> registerGuest(@RequestBody Guest guest) {
         try {
@@ -27,6 +33,12 @@ public class GuestController {
         }
     }
 
+    /**
+     * Retrieve a guest by their ID.
+     *
+     * @param guestId The ID of the guest to retrieve.
+     * @return A response containing the guest information or an error message.
+     */
     @GetMapping("/{guestId}")
     public ResponseEntity<Object> getGuestById(@PathVariable Long guestId) {
         Guest guest = guestService.getGuestById(guestId);
@@ -38,12 +50,24 @@ public class GuestController {
         }
     }
 
+    /**
+     * Retrieve a list of all guests.
+     *
+     * @return A response containing a list of guest entries or an error message.
+     */
     @GetMapping("/all")
     public ResponseEntity<Object> getAllGuests() {
         List<Guest> guests = guestService.getAllGuests();
         return ResponseEntity.status(HttpStatus.OK).body(guests.toString());
     }
 
+    /**
+     * Update a guest by their ID.
+     *
+     * @param guestId     The ID of the guest to update.
+     * @param updatedGuest The updated guest object.
+     * @return A response indicating the success or failure of the update.
+     */
     @PutMapping("/update/{guestId}")
     public ResponseEntity<String> updateGuest(@PathVariable Long guestId, @RequestBody Guest updatedGuest) {
         try {
@@ -61,6 +85,12 @@ public class GuestController {
         }
     }
 
+    /**
+     * Delete a guest by their ID.
+     *
+     * @param guestId The ID of the guest to delete.
+     * @return A response indicating the success or failure of the deletion.
+     */
     @DeleteMapping("/delete/{guestId}")
     public ResponseEntity<String> deleteGuest(@PathVariable Long guestId) {
         if (guestService.deleteGuest(guestId)) {
@@ -69,5 +99,4 @@ public class GuestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Guest not found with ID: " + guestId);
         }
     }
-
 }
